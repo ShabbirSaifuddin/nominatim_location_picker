@@ -200,6 +200,23 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
               child: Padding(
                 padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
                 child: TextFormField(
+                    textInputAction: TextInputAction.search,
+                    onFieldSubmitted: (text) async {
+                      FocusScopeNode currentFocus = FocusScope.of(context);
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
+                      _isResult == false
+                          ? _changeAppBar()
+                          : setState(() {
+                              _isSearching = true;
+                            });
+                      dynamic res =
+                          await NominatimService().getAddressLatLng(text);
+                      setState(() {
+                        _addresses = res;
+                      });
+                    },
                     controller: _ctrlSearch,
                     decoration: InputDecoration(
                         hintText: widget.searchHint,
