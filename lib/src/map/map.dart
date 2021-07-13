@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
+
 
 class MapPage extends StatefulWidget {
   MapPage({
@@ -38,17 +39,25 @@ class _MapPageState extends State<MapPage> {
                     urlTemplate:
                         'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
                     subdomains: ['a', 'b', 'c'],
-                    tileProvider: CachedNetworkTileProvider())
+                    tileProvider: NonCachingNetworkTileProvider())
                 : widget.customMapLayer
             : widget.customMapLayer == null
-                ? new TileLayerOptions(
-                    urlTemplate: "https://api.tiles.mapbox.com/v4/"
-                        "{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",
-                    additionalOptions: {
-                      'accessToken': widget.apiKey,
-                      'id': 'mapbox.streets',
-                    },
-                  )
+                // ? new TileLayerOptions(
+                //     urlTemplate: "https://api.tiles.mapbox.com/v4/"
+                //         "{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",
+                //     additionalOptions: {
+                //       'accessToken': widget.apiKey,
+                //       'id': 'mapbox.streets',
+                //     },
+                //   )
+            ? new TileLayerOptions(
+          urlTemplate: "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+          additionalOptions: {
+            'attribution' :'© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
+            'accessToken': widget.apiKey,
+            'id': 'mapbox/streets-v11',
+          },
+        )
                 : widget.customMapLayer,
         MarkerLayerOptions(
           markers: widget.markers,

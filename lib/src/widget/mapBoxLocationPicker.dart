@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:nominatim_location_picker/nominatim_location_picker.dart';
 import 'package:nominatim_location_picker/src/loaders/loader_animator.dart';
 import 'package:nominatim_location_picker/src/widget/location.dart';
@@ -159,13 +159,13 @@ class _MapBoxLocationPickerState extends State<MapBoxLocationPicker>
     super.initState();
   }
 
-  _getCurrentLocation() {
+  _getCurrentLocation() async {
     /*
     --- Função responsável por receber a localização atual do usuário
   */
-    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-    geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+    // final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
       setState(() {
         _currentPosition = position;

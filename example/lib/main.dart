@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget getLocationWithMapBox() {
     return MapBoxLocationPicker(
       popOnSelect: true,
-      apiKey: "YOUR API KEY",
+      apiKey: "pk.eyJ1Ijoic2hhYmJpcnNhaWYiLCJhIjoiY2txajFoZXJqMHJhcTJwbnhob2M2Nm12eSJ9.IEe3J1xMX27YyJgK-Vm4XA",
       limit: 10,
       language: 'pt',
       country: 'br',
